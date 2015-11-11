@@ -274,13 +274,89 @@ agencies.forEach(function(userAgency) {
 	});
 })
 
+function outputSingleTable(data, sortBy) {
+	var headers = [];
+	for(header in data[0]) {
+		headers.push(header);
+	}
+
+	var line = '';
+	for(var c = 0; c < headers.length; c++) {
+		if(c > 0) {
+			line += ',';
+		}
+		line += headers[c];
+	}
+	console.info(line);
+
+	data.sort(function(obj1, obj2) {
+		if(obj1[sortBy] > obj2[sortBy]) {
+			return -1;
+		} else {
+			return 1;
+		}
+	});
+
+	for(var c = 0; c < data.length; c++) {
+		line = '';
+		for(var x = 0; x < headers.length; x++) {
+			if(x > 0) {
+				line += ',';
+			}
+			line += data[c][headers[x]];
+		}
+		console.info(line);
+	}
+}
+
+function output2DTable(data) {
+	var headers = ['']; 
+	var keys = Object.keys(data);
+	for(header in data[keys[0]]) {
+		headers.push(header);
+	}
+
+	var line = '';
+	for(var c = 0; c < headers.length; c++) {
+		if(c > 0) {
+			line += ',';
+		}
+		line += headers[c];
+	}
+	console.info(line);
+
+	for(key in data) {
+		line = key;
+		for(var c = 1; c < headers.length; c++) {
+			line += ','
+			line += data[key][headers[c]];
+		}
+		console.info(line);
+	}
+}
+
 async.parallel(asyncTasks, function() {
-	console.info(agencyUniques);
-	console.info(crossAgencyInfo);
-	console.info(applicationLaunches);
-	console.info(listingReviews);
-	console.info(listingReviewViews);
-	console.info(listingsApproved);
-	console.info(applicationFavorites);
-	console.info(agencyUsers);
+	console.info("-- APPLICATION LAUNCHES --");
+	outputSingleTable(applicationLaunches, 'launches');
+	console.info();	
+
+	console.info("-- LISTING REVIEWS --");
+	outputSingleTable(listingReviews, 'reviews');
+	console.info();	
+
+	console.info("-- LISTING REVIEW VIEWS --");
+	outputSingleTable(listingReviewViews, 'views');
+	console.info();	
+	
+	console.info("-- LISTINGS APPROVED --");
+	outputSingleTable(listingsApproved);
+	console.info();	
+
+	console.info("-- APPLICATION FAVORITES --");
+	outputSingleTable(applicationFavorites);
+	console.info();	
+	
+	console.info("-- CROSS APP AGENCY USE --")
+	output2DTable(agencyUsers);
+	console.info();
 });
