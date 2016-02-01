@@ -1,0 +1,9 @@
+{
+  "certPath":"<path>",
+  "keyPath":"<path>",
+  "strictSSL":<true|false>,
+  "piwikUrl":"<piwik-base-url>",
+  "piwikToken":"<token>",
+  "piwikSiteId":<siteid>,
+  "agencies":["ORG","AAA","BBB","CCC"]
+}

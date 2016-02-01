@@ -1,0 +1,50 @@
+<html>
+<body>
+  <% for( category in stats) { %>
+    <% if(category != 'agencyUsers') { %> 
+      <h2><%= category %></h2>
+      <% var headers = utils.getHeaders(stats[category]) %>
+      <table>
+        <thead>
+          <% for(var c = 0; c < headers.length; c++) { %>
+            <th><%= headers[c] %></th>
+          <% } %>
+        </thead>
+        <tbody>
+          <% for(var c = 0; c < stats[category].length; c++) { %>
+            <tr>
+              <% for(var headerIndex = 0; headerIndex < headers.length; headerIndex++) { %>
+                <td><%= stats[category][c][headers[headerIndex]] %></td>
+              <% } %>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    <% } %>
+  <% } %>
+  <h2>Cross App Agency Use</h2>
+  <table>
+    <thead>
+      <th></th>
+      <th>Visitors Total</th>
+      <% var agencies = Object.keys(stats['agencyUsers']) %>
+      <% for(var index = 0; index < agencies.length; index++) { %> 
+        <th><%= agencies[index] %></th>
+      <% } %>
+      <th>Launching Apps</th>
+    </thead>
+    <tbody>
+      <% for(var rowIndex = 0; rowIndex < agencies.length; rowIndex++) { %>
+        <tr>
+          <td><%= agencies[rowIndex] %></td>
+          <td><%= stats['agencyUsers'][agencies[rowIndex]]['Visitors Total'] %></td>
+          <% for(var colIndex = 0; colIndex < agencies.length; colIndex++) { %>
+            <td><%= stats['agencyUsers'][agencies[rowIndex]][agencies[colIndex]] %></td>
+          <% } %>
+          <td><%= stats['agencyUsers'][agencies[rowIndex]]['Launching Apps'] %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>
