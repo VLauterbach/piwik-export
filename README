@@ -1,0 +1,22 @@
+Steps to install piwik-export
+
+  * Install nodejs
+  * Create config.json file with correct parameters
+    ```
+    {
+      "certPath":"<path>",
+      "keyPath":"<path>",
+      "strictSSL":<true|false>,
+      "piwikUrl":"<piwik-base-url>",
+      "piwikToken":"<token-from-admin-in-piwik-user-list>",
+      "piwikSiteId":<siteid>,
+      "agencies":["ORG","AAA","BBB","CCC"]
+    }
+    ```
+  * Run server with `node app.js`
+
+In order to run as a background process
+
+  * Install npm
+  * Install forever module `npm install -g forever` (may need sudo)
+  * Run server with `forever start app.js`
